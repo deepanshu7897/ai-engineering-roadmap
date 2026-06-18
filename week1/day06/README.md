@@ -1,31 +1,21 @@
-# Day 06 — Dataclasses, Enums & Configuration Objects
+# Day 06 - Strategy Design Pattern
 
-## Concepts Covered
+## Topics Covered
 
-- Dataclasses
-- Enums
-- Configuration Objects
-- Nested Dataclasses
-- Default Factory
-- Type Hints
+- Strategy Pattern
+- Interfaces with ABC
+- Dependency Injection
+- Polymorphism
+- AI Chunking Strategies
 
-## Deliverables
+## Implemented Strategies
 
-- Environment Enum
-- Database Configuration
-- Application Configuration
-- Unit Tests
+1. FixedSizeChunker
+2. SentenceChunker
+3. RecursiveChunker
 
-## Validation
+## Run
 
 ```bash
-python config.py
+python chunker_strategy.py
 pytest
-```
-
-Result:
-
-```text
-All examples executed successfully.
-Tests passed.
-```
