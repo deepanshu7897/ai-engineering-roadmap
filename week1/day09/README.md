@@ -1,30 +1,26 @@
-# Day 09 - Logging & Configuration Management
+# Day 09 - Performance Profiling & Optimization
 
 ## Topics Covered
 
-- Python Logging
-- Log Levels
-- Log Files
-- Application Monitoring
-- Configuration Management Basics
+- Profiling
+- Benchmarking
+- functools.lru_cache
+- Recursive Optimization
+- Performance Measurement
 
 ## Files
 
-- app.py
-- test_app.py
+- optimized_function.py
+- test_optimized_function.py
+- profiling_report.md
 
 ## Run
 
 ```bash
-python app.py
-```
-
-## Test
-
-```bash
+python optimized_function.py
 pytest -v
 ```
 
 ## Result
 
-Successfully implemented logging and automated testing in a Python application.
+Successfully optimized Fibonacci computation using caching and measured performance improvements.
