@@ -1,13 +1,20 @@
-# Day 13 - Async Routes & Background Tasks
+# Day 13 – Async Routes & Background Tasks
 
 ## Topics Covered
 
-- Async Routes
+- async def
 - BackgroundTasks
 - asyncio
+- run_in_executor
 - Lifespan Events
+- app.state
 - Startup & Shutdown
-- FastAPI Background Processing
+
+## Endpoints
+
+GET /
+
+POST /process
 
 ## Run
 
@@ -15,10 +22,6 @@
 uvicorn main:app --reload
 ```
 
-## Endpoint
-
-POST /process
-
 ## Result
 
-Background task executes after returning the API response.
+The API immediately returns a Job ID while document processing continues asynchronously in the background.
