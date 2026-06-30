@@ -1,8 +1,9 @@
-# Day 14 - Validation & Error Handling
+# Day 14 - Validation, Error Handling & Response Models
 
-## Topics
+## Topics Covered
 
-- field_validator
+- Pydantic v2 field_validator
+- Pydantic v2 model_validator
 - HTTPException
 - Global Exception Handlers
 - RequestValidationError
@@ -10,11 +11,9 @@
 
 ## Endpoints
 
-GET /
-
-POST /register
-
-GET /users/{id}
+- GET /
+- POST /register
+- GET /users/{user_id}
 
 ## Run
 
@@ -22,6 +21,11 @@ GET /users/{id}
 uvicorn main:app --reload
 ```
 
-## Result
+## Features
 
-Implemented request validation, consistent JSON error responses, and global exception handling using FastAPI and Pydantic.
+- Email Validation
+- Password Strength Validation
+- Confirm Password Validation
+- Age Validation
+- Consistent JSON Error Responses
+- Global Exception Handling
