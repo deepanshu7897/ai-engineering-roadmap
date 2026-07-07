@@ -10,6 +10,7 @@ anyio==4.14.1
 ast_serialize==0.5.0
 attrs==26.1.0
 bcrypt==4.0.1
+certifi==2026.6.17
 click==8.4.2
 Deprecated==1.3.1
 ecdsa==0.19.2
@@ -17,6 +18,8 @@ fastapi==0.138.0
 frozenlist==1.8.0
 greenlet==3.5.3
 h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
 idna==3.18
 iniconfig==2.3.0
 librt==0.11.0
@@ -41,7 +44,7 @@ pytest-asyncio==1.4.0
 python-dotenv==1.2.2
 python-jose==3.5.0
 python-multipart==0.0.32
--e git+https://github.com/deepanshu7897/ai-engineering-roadmap.git@c75b0cdca62009b34d2a90bc58134d1b6a956bd7#egg=python_advanced&subdirectory=week1/day10/python_advanced
+-e git+https://github.com/deepanshu7897/ai-engineering-roadmap.git@1170af03cfa778c2515275bd724865e1ce98a017#egg=python_advanced&subdirectory=week1/day10/python_advanced
 rsa==4.9.1
 six==1.17.0
 slowapi==0.1.10
