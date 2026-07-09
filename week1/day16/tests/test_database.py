@@ -17,5 +17,5 @@ TestingSessionLocal = async_sessionmaker(
 )
 
 
-class TestBase(DeclarativeBase):
+class Base(DeclarativeBase):
     pass
