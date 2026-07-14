@@ -10,6 +10,7 @@ from app.middleware.rate_limiter import limiter
 
 from app.routers.auth import router as auth_router
 from app.routers.files import router as file_router
+from app.routers.ai import router as ai_router
 
 app = FastAPI(
     title="Authentication API",
@@ -57,6 +58,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(file_router)
+app.include_router(ai_router)
 
 
 @app.get("/")
