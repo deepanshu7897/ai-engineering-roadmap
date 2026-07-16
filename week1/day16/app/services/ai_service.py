@@ -10,6 +10,11 @@ async def generate_ai_response(
     db: AsyncSession,
     prompt: str,
 ):
+    from app.crud.ai_chat import get_chat_history
+
+
+async def fetch_chat_history(db: AsyncSession):
+    return await get_chat_history(db)
     response = client.generate(prompt)
 
     await save_chat(
