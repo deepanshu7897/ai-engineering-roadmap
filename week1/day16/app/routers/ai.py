@@ -26,6 +26,7 @@ async def generate_text(
     response = await generate_ai_response(
         db=db,
         prompt=request.prompt,
+        session_id=request.session_id,
     )
 
     return {
@@ -33,11 +34,16 @@ async def generate_text(
     }
 
 
-@router.get("/history")
+@router.get("/history/{session_id}")
 async def get_history(
+    session_id: str,
     db: AsyncSession = Depends(get_db),
 ):
-    history = await fetch_chat_history(db)
+    history = await fetch_chat_history(
+        db=db,
+        session_id=session_id,
+    )
+
     return history
 
 
