@@ -7,6 +7,7 @@ from app.core.dependencies import get_current_user
 from app.db.database import get_db
 from app.models.user import User
 from app.schemas.ai import PromptRequest
+from app.schemas.ai_response import AIResponse
 from app.services.ai_service import (
     generate_ai_response,
     fetch_chat_history,
@@ -20,21 +21,20 @@ router = APIRouter(
 gemini = GeminiClient()
 
 
-@router.post("/generate")
+@router.post(
+    "/generate",
+    response_model=AIResponse,
+)
 async def generate_text(
     request: PromptRequest,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    response = await generate_ai_response(
+    return await generate_ai_response(
         db=db,
         prompt=request.prompt,
         session_id=current_user.username,
     )
-
-    return {
-        "response": response
-    }
 
 
 @router.get("/history")
