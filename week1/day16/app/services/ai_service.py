@@ -5,6 +5,8 @@ from app.ai.gemini_client import GeminiClient
 from app.ai.guardrails import Guardrails
 from app.ai.response_metrics import ResponseMetrics
 from app.crud.ai_chat import get_chat_history, save_chat
+from app.rag.prompt_builder import PromptBuilder
+from app.rag.retriever import Retriever
 from app.schemas.ai_response import AIResponse
 
 client = GeminiClient()
@@ -17,6 +19,8 @@ guardrails = Guardrails()
 
 metrics = ResponseMetrics()
 
+retriever = Retriever()
+
 
 async def generate_ai_response(
     db: AsyncSession,
@@ -27,21 +31,23 @@ async def generate_ai_response(
     # -----------------------------
     # Validate Input
     # -----------------------------
-
     guardrails.check(prompt)
 
     # -----------------------------
-    # Load Conversation History
+    # Retrieve Context
     # -----------------------------
+    context = retriever.retrieve(
+        query=prompt,
+        top_k=3,
+    )
 
+    # -----------------------------
+    # Conversation History
+    # -----------------------------
     history = await get_chat_history(
         db=db,
         session_id=session_id,
     )
-
-    # -----------------------------
-    # Build Conversation
-    # -----------------------------
 
     conversation = conversation_manager.build_conversation(
         history=history,
@@ -49,19 +55,26 @@ async def generate_ai_response(
     )
 
     # -----------------------------
+    # Build RAG Prompt
+    # -----------------------------
+    rag_prompt = PromptBuilder.build(
+        question=prompt,
+        context=context,
+        conversation=conversation,
+    )
+
+    # -----------------------------
     # Generate Response
     # -----------------------------
-
     metrics.start()
 
-    response = client.generate(conversation)
+    response = client.generate(rag_prompt)
 
     response_time = metrics.stop()
 
     # -----------------------------
     # Save Chat
     # -----------------------------
-
     await save_chat(
         db=db,
         session_id=session_id,
@@ -72,8 +85,7 @@ async def generate_ai_response(
     # -----------------------------
     # Metrics
     # -----------------------------
-
-    total_text = conversation + response
+    total_text = rag_prompt + response
 
     tokens = metrics.estimate_tokens(total_text)
 
