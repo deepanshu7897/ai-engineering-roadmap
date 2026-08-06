@@ -34,15 +34,18 @@ async def generate_ai_response(
     guardrails.check(prompt)
 
     # -----------------------------
-    # Retrieve Context
+    # Retrieve Context + Sources
     # -----------------------------
-    context = retriever.retrieve(
+    retrieval = retriever.retrieve(
         query=prompt,
         top_k=3,
     )
 
+    context = retrieval["context"]
+    sources = retrieval["sources"]
+
     # -----------------------------
-    # Conversation History
+    # Load Conversation History
     # -----------------------------
     history = await get_chat_history(
         db=db,
@@ -55,7 +58,7 @@ async def generate_ai_response(
     )
 
     # -----------------------------
-    # Build RAG Prompt
+    # Build Prompt
     # -----------------------------
     rag_prompt = PromptBuilder.build(
         question=prompt,
@@ -91,6 +94,9 @@ async def generate_ai_response(
 
     cost = metrics.estimate_cost(tokens)
 
+    # -----------------------------
+    # Response
+    # -----------------------------
     return AIResponse(
         success=True,
         response=response,
@@ -98,6 +104,7 @@ async def generate_ai_response(
         response_time=response_time,
         tokens_used=tokens,
         estimated_cost=cost,
+        sources=sources,
     )
 
 

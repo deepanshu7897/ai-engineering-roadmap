@@ -11,7 +11,7 @@ class Retriever:
         self,
         query: str,
         top_k: int = 3,
-    ) -> str:
+    ) -> dict:
 
         query_embedding = self.embedding_service.embed_text(query)
 
@@ -20,8 +20,32 @@ class Retriever:
             n_results=top_k,
         )
 
-        documents = results["documents"][0]
+        documents = results.get("documents", [[]])[0]
+        metadatas = results.get("metadatas", [[]])[0]
 
         context = "\n\n".join(documents)
 
-        return context
+        sources = []
+        seen = set()
+
+        for metadata in metadatas:
+
+            source = {
+                "source": metadata.get("source"),
+                "page": metadata.get("page"),
+                "doc_type": metadata.get("doc_type"),
+            }
+
+            key = (
+                source["source"],
+                source["page"],
+            )
+
+            if key not in seen:
+                seen.add(key)
+                sources.append(source)
+
+        return {
+            "context": context,
+            "sources": sources,
+        }

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class AIResponse(BaseModel):
@@ -8,3 +8,5 @@ class AIResponse(BaseModel):
     response_time: float
     tokens_used: int
     estimated_cost: float
+
+    sources: list[dict] = Field(default_factory=list)
